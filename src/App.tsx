@@ -1,11 +1,19 @@
+import { createContext, useContext } from "react";
+
 import "./App.css";
 import { Form } from "./Form";
+
+const globalVar1 = createContext("hello");
+
 function App() {
   return (
-    <div className="App">
-      <h1>hello</h1>
-      <Form></Form>
-    </div>
+    <>
+      <globalVar1.Provider value={""}>
+        <div className="App">
+          <Form />
+        </div>
+      </globalVar1.Provider>
+    </>
   );
 }
 
