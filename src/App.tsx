@@ -1,18 +1,18 @@
-import { createContext, useContext } from "react";
-
+import { createContext, useState } from "react";
 import "./App.css";
-import { Form } from "./Form";
+import { Gallery } from "./Gallery";
 
-const globalVar1 = createContext("hello");
+export const MyContext = createContext("undefined");
 
 function App() {
+  const [theme, setTheme] = useState("light");
   return (
     <>
-      <globalVar1.Provider value={""}>
+      <MyContext.Provider value={theme}>
         <div className="App">
-          <Form />
+          <Gallery />
         </div>
-      </globalVar1.Provider>
+      </MyContext.Provider>
     </>
   );
 }
