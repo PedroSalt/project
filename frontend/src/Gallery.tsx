@@ -1,6 +1,9 @@
 import { FormEvent, useRef, useState } from "react";
+import { Likes } from "./Likes";
+const { v4: uuidv4 } = require("uuid");
 
 export const Gallery = () => {
+  const [showLikes, setShowLikes] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -11,13 +14,23 @@ export const Gallery = () => {
     const parsedDataURL = parsedData[0].url;
     setImgUrl(parsedDataURL);
   };
-
-  const handleLike = () => {
+  const handleLike = async () => {
     const img = image.current! as HTMLImageElement;
-    console.log(img.src);
+
+    try {
+      fetch("/database", {
+        method: "POST",
+        body: JSON.stringify({ url: img.src, id: uuidv4() }),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+    } catch (error) {
+      console.error("caught unexpected error: ", error);
+    }
   };
   const image = useRef(null);
-
+  const toggleLikes = () => {
+    setShowLikes(!showLikes);
+  };
   return (
     <div>
       <h1>Get a random cat picture</h1>
@@ -29,7 +42,24 @@ export const Gallery = () => {
           <img src={imgUrl} alt="" ref={image} />
         </p>
       </form>
-      <button onClick={handleLike}>Like</button>
+      {imgUrl.length ? (
+        <p>
+          <button onClick={handleLike}>Like</button>
+        </p>
+      ) : (
+        ""
+      )}
+      <div className="userPage" onClick={toggleLikes}>
+        Your liked pictures
+      </div>
+      {showLikes ? <Likes /> : ""}
+      {showLikes ? (
+        <span className="closeLikes" onClick={toggleLikes}>
+          close
+        </span>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

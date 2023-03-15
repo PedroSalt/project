@@ -1,5 +1,6 @@
 {
   "name": "project",
+  "proxy": "http://localhost:4000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -44,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "uuid": "^9.0.0",
     "@types/node": "^18.15.3"
   }
 }
