@@ -44,7 +44,13 @@ export const Gallery = () => {
       </form>
       {imgUrl.length ? (
         <p>
-          <button onClick={handleLike}>Like</button>
+          <button onClick={handleLike}>
+            <img
+              className="like-button"
+              src="https://cdn-icons-png.flaticon.com/512/28/28309.png"
+              alt="like"
+            />
+          </button>
         </p>
       ) : (
         ""
